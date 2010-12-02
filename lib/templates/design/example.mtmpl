@@ -1,0 +1,45 @@
+exports.attachments = {
+    res_dir: "<%= name %>/attachments",
+    exclude_rx_list: [/.*~/]
+}
+
+exports.libs = {
+    res_dir: "<%= name %>/libs",
+    exclude_rx_list: [/.*~/]
+}
+
+exports.design_doc = {
+	validate_doc_update: function(newDoc, oldDoc, userCtx) {
+	    log(require("libs/test").test);
+
+	    if(newDoc.type !== "<%= name %>") return;
+
+	    if(!newDoc.created_at)
+		throw {forbidden: "<%= name %> must have a created_at field."};
+	    if(oldDoc && (newDoc.created_at !== oldDoc.created_at))
+		throw {forbidden: "<%= name %> updates can't change created_at field."};  
+	},
+	views: {
+	    by_plan_id: {
+		map: function (doc) {
+		    if (doc.type == "<%= name %>") emit(doc.<%= name %>_id, 1);
+		},
+		reduce: "_sum"
+	    },
+	    by_created_at: {
+		map: function (doc) {
+		    if(doc.type !== "<%= name %>") return;
+
+		    var date = new Date(doc.created_at);
+		    emit([date.getFullYear(), 
+			  date.getMonth(),
+			  date.getDay(),
+			  doc._id,
+			  doc.<%= name %>_id,
+			  doc.subject],
+			 1);
+		},
+		reduce: "_sum"
+	    },
+	}
+}

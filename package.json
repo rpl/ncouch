@@ -1,0 +1,21 @@
+{ "name" : "ncouch"
+, "description" : "Yet another collection of nodejs utilities for building CouchDB applications."
+, "tags" : ["couchdb", "webframework"]
+, "version" : "0.1.0beta"
+, "author" : "Luca Greco <luca.greco@alcacoop.it>"
+, "engines" : ["node >=0.1.95"]
+, "main" : "./lib/ncouch"
+, "dependencies": 
+  { "request": "*"
+  , "mime": "*" 
+  },
+  "bin": { "ncouch" : "./bin/ncouch" },
+  "modules": 
+  { "config": "./lib/config"
+  , "utils": "./lib/utils"
+  , "microtemplate": "./lib/microtemplate"
+  , "cli": "./lib/cli"
+  , "cli/push": "./lib/cli/push"
+  , "cli/generate": "./lib/cli/generate" 
+  }
+}
