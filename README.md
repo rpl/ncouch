@@ -10,16 +10,27 @@ Getting Started
 
 ### CLI
 
+Create a new project and run a testing couchdb instance
 <pre>
-$ ncouch push design/*.js http://admin:pass@localhost:5984/databasename
+$ ncouch generate project hellocouch
+ncouch v0.1.0beta
+Creating 'hellocouch' ncouch project dir...
+Creating 'design' dir...
+Creating 'example' design doc...
+Creating 'example' design doc resource directories (attachments and libs)...
 
-or
+couchdb -a couchdb-user-test.ini
+...
+</pre>
 
-$ ncouch push design/*.js databasename
+In another shell:
+<pre>
+$ cd hellocouch
 
-or 
-
-$ ncouch push --config=ncouch_config.json
+hellocouch$ ncouch push http://admin:admin@localhost:5984/hellocouch
+ncouch v0.1.0beta
+pushing... example.js
+	CREATING DESIGN DOC '_design/example'.
 </pre>
 
 An **ncouch** design doc is a node commonjs module which exports **design_doc**,
@@ -28,17 +39,17 @@ An **ncouch** design doc is a node commonjs module which exports **design_doc**,
 <pre><code>
 // design/test1.js
 exports.attachments = {
-  res\_dir: ""test1/attachments", 
-  exclude\_rx\_list: [/.*~/]
+  res_dir: ""test1/attachments", 
+  exclude_rx_list: [/.*~/]
 };
 
 exports.libs = {
-  res\_dir: "test1/libs", 
-  exclude\_rx\_list: [/.*~/]
+  res_dir: "test1/libs", 
+  exclude_rx_list: [/.*~/]
 };
 
-exports.design\_doc = {
-  validate\_doc\_update: function(newDoc, oldDoc, userCtx) {
+exports.design_doc = {
+  validate_doc_update: function(newDoc, oldDoc, userCtx) {
     ...
   },
   views: {
@@ -49,4 +60,4 @@ exports.design\_doc = {
 
 ### CommonJS Module
 
-
+TODO
